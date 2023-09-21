@@ -12,16 +12,31 @@ namespace Calculator
 {
     public partial class CalculatorFace : Form
     {
-        int displayNumber;
+        int displayNumber = 0;
+        int waitingNumber = 0;
         public CalculatorFace()
         {
             InitializeComponent();
+            txtDisplay.Text = displayNumber.ToString();
         }
 
         private void updateNumber(String num)
         {
-            txtDisplay.Text += num;
-            /*displayNumber = Integer(txtDisplay.Text);
+            if (displayNumber == 0)
+            {
+                displayNumber = Int32.Parse(num);
+            }
+            else
+            {
+                String temp = displayNumber.ToString();
+                temp += num;
+                displayNumber = Int32.Parse(temp);
+            }
+
+            txtDisplay.Text = displayNumber.ToString();
+
+            /*todo, add commas where appropriate
+             * displayNumber = Integer(txtDisplay.Text);
             
             if(txtDisplay.Text.Length > 3)
             {
@@ -87,6 +102,15 @@ namespace Calculator
         private void btnClear_Click(object sender, EventArgs e)
         {
             txtDisplay.Clear();
+            displayNumber = 0;
+            txtDisplay.Text = displayNumber.ToString();
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            waitingNumber = displayNumber;
+            displayNumber = 0;
+
         }
     }
 }
